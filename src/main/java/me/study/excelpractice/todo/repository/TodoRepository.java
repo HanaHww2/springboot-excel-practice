@@ -1,4 +1,4 @@
-package me.study.excelpractice.todo;
+package me.study.excelpractice.todo.repository;
 
 import me.study.excelpractice.todo.domain.entity.TodoEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

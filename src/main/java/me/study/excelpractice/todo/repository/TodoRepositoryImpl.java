@@ -1,4 +1,4 @@
-package me.study.excelpractice.todo;
+package me.study.excelpractice.todo.repository;
 
 import static me.study.excelpractice.todo.domain.entity.QTodoEntity.todoEntity;
 

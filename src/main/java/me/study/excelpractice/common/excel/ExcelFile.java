@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
 
-public interface ExcelFile<T> {
+public interface ExcelFile<E, T> {
     <E extends Enum<E> & ExcelColumnInfo> void setMetaInfo(Class<E> excelInfoClazz);
     void renderHeader();
     void renderBody(List<T> dtoList);

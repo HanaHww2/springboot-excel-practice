@@ -1,4 +1,4 @@
-package me.study.excelpractice.todo;
+package me.study.excelpractice.todo.api;
 
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -7,6 +7,7 @@ import me.study.excelpractice.common.dto.DefaultPageDto;
 import me.study.excelpractice.common.excel.CellColor;
 import me.study.excelpractice.common.excel.ExcelUtil;
 import me.study.excelpractice.common.excel.SimpleExcelFile;
+import me.study.excelpractice.todo.service.TodoService;
 import me.study.excelpractice.todo.domain.TodoExcelColumnInfo;
 import me.study.excelpractice.todo.domain.dto.TodoConditionDto;
 import me.study.excelpractice.todo.domain.dto.TodoExcelDto;
@@ -26,7 +27,7 @@ public class TodoController {
         ExcelUtil.setFileName(response, "투두 리스트");
         ExcelUtil.setContentType(response);
 
-        SimpleExcelFile<TodoExcelDto> excelFile = new SimpleExcelFile<>(CellColor.COLOR_BLUE);
+        SimpleExcelFile<TodoExcelColumnInfo, TodoExcelDto> excelFile = new SimpleExcelFile<>(CellColor.COLOR_BLUE);
         excelFile.setMetaInfo(TodoExcelColumnInfo.class);
         excelFile.renderHeader();
 

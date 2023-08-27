@@ -6,14 +6,14 @@ spring:
       test: test, common
       prod: common, prod, auth, prod-db
 ---
-# common ??
+# common 환경
 spring:
   config:
     activate:
       on-profile: common
 
 ---
-# test ??
+# test 환경
 spring:
   config:
     activate:

@@ -1,4 +1,4 @@
-package me.study.excelpractice.todo;
+package me.study.excelpractice.todo.mapper;
 
 import me.study.excelpractice.todo.domain.dto.TodoExcelDto;
 import me.study.excelpractice.todo.domain.entity.TodoEntity;

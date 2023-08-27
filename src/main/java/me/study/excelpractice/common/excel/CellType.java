@@ -21,73 +21,62 @@ import org.apache.poi.xssf.usermodel.XSSFColor;
 @RequiredArgsConstructor
 public enum CellType {
     TEXT(null,
-            cellStyle -> cellStyle,
             (cell, val) -> {
-        cell.setCellValue(val.toString());
-        return cell;
+                cell.setCellValue(val.toString());
+                return cell;
+            },
+            (cell, style) -> {
+                cell.setCellStyle(style);
+                return cell;
     }),
     L_TEXT(null,
-            cellStyle -> {
-        cellStyle.setAlignment(HorizontalAlignment.LEFT);
-        return cellStyle;
-        }, (cell, val) -> {
-        cell.setCellValue(val.toString());
-        return cell;
+            (cell, val) -> {
+                cell.setCellValue(val.toString());
+                return cell;
+            },
+            (cell, style) -> {
+                style.setAlignment(HorizontalAlignment.LEFT);
+                cell.setCellStyle(style);
+                return cell;
     }),
     NUMBER(null,
-            cellStyle -> cellStyle,
             (cell, val) -> {
-        cell.setCellValue((Long) val);
-        return cell;
+                cell.setCellValue((Long) val);
+                return cell;
+            },
+            (cell, style) -> {
+                cell.setCellStyle(style);
+                return cell;
     }),
     DATE("yyyy-MM-dd hh:mm:ss",
-            cellStyle -> cellStyle,
             (cell, val) -> {
-        cell.setCellValue((LocalDateTime) val);
-        return cell;
+                cell.setCellValue((LocalDateTime) val);
+                return cell;
+            },
+            (cell, style) -> {
+                cell.setCellStyle(style);
+                return cell;
     }),
     HEADER(null,
-            cellStyle -> cellStyle,
             (cell, val) -> {
-        cell.setCellValue(val.toString());
-        return cell;
+                cell.setCellValue(val.toString());
+                return cell;
+            },
+            (cell, style) -> {
+                cell.setCellStyle(style);
+                return cell;
     });
 
     private final String format;
-    private final Function<CellStyle, CellStyle> additionalStyle;
     private final BiFunction<Cell, Object, Cell> typedValue;
+    private final BiFunction<Cell, CellStyle, Cell> typedStyle;
 
-    protected CellStyle applyAdditionalStyle(CellStyle cellStyle) {
-        return additionalStyle.apply(cellStyle);
-    }
+
     protected Cell applyCellValue(Cell cell, Object val) {
         return typedValue.apply(cell, val);
     }
 
-    protected final void createTypedStyle(XSSFCellStyle typedStyle, DataFormat dataFormat, Color color) {
-
-        setBaseStyle(typedStyle, color);
-        String format = this.getFormat();
-        if (format != null) {
-            typedStyle.setDataFormat(dataFormat.getFormat(format));
-        }
-        this.applyAdditionalStyle(typedStyle);
-    }
-
-    protected static final void setBaseStyle(XSSFCellStyle cellStyle, Color color) {
-
-        // 배경색 지정
-        cellStyle.setFillForegroundColor(new XSSFColor(color, new DefaultIndexedColorMap()));
-        cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-
-        // 정렬
-        cellStyle.setAlignment(HorizontalAlignment.CENTER);
-        cellStyle.setVerticalAlignment(VerticalAlignment.CENTER);
-
-        // 테두리
-        cellStyle.setBorderTop(BorderStyle.THIN);
-        cellStyle.setBorderBottom(BorderStyle.THIN);
-        cellStyle.setBorderLeft(BorderStyle.THIN);
-        cellStyle.setBorderRight(BorderStyle.THIN);
+    protected Cell applyCellStyle(Cell cell, CellStyle cellStyle) {
+        return typedStyle.apply(cell, cellStyle);
     }
 }
