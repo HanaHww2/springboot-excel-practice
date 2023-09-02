@@ -24,6 +24,7 @@ public class TodoController {
     public void getListExcel(
             TodoConditionDto conditions,
             HttpServletResponse response) throws IOException {
+
         ExcelUtil.setFileName(response, "투두 리스트");
         ExcelUtil.setContentType(response);
 
@@ -36,7 +37,7 @@ public class TodoController {
 
         DefaultPageDto<TodoExcelDto> pageDto;
         while(total >= page || total == -1) {
-            var pageable = PageRequest.of(page++, 100);
+            var pageable = PageRequest.of(page++, 1000);
             pageDto = todoService.searchTodoForExcel(conditions, pageable);
             if (total == -1) {
                 total = pageDto.getTotalPages();
